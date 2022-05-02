@@ -1,0 +1,104 @@
+<table><tr><td><a class="btn btn-success" href="product" >Add Product</a></td><td></td><td></td><td><form action="../product/search" method="POST"><input onchange="this.form.submit()" type="text" placeholder="Search Product Name" name="search" ></form></td></tr></table>
+
+  
+<?php  ?>
+    <table class="table">
+        <thead><tr>
+    <th>Name</th>
+    <th>Category</th>
+    <th>Price</th>
+    <th>Stock</th></tr></thead>
+   <?php foreach($result as $v){?>
+    <tbody>
+   <tr>
+    
+    <td><?php echo $v->name; ?></td>
+   <td><?php echo $v->category; ?></td>
+   <td><?php echo $v->price; ?></td>
+   <td><?php echo $v->stock; ?></td>
+   <td><form action="../product/edit" method="POST"><button  class="btn btn-primary" name="view" value="<?php echo $v->_id; ?>" data-toggle="modal" data-target="#exampleModalCenter">
+    Quick View
+    </button></form>
+    <!-- <button type="button" class="btn btn-success editbtn"> EDIT </button> -->
+</td>
+   <td><form  action="../product/delete" method="POST" ><button class="btn btn-danger" name="delete" value="<?php echo $v->_id; ?>" >Delete</button></form></td></tr>
+
+   <?php }?>
+    </tbody>
+    </table>
+ 
+<!-- Modal -->
+<div class="modal fade" id="editmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel"> Edit Student Data </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <form action="../product/update" method="POST">
+
+                    <div class="modal-body">
+
+                        <input type="hidden" name="update_id" id="update_id">
+
+                        <div class="form-group">
+                            <label>  Name </label>
+                            <input type="text" name="fname" id="fname" class="form-control"
+                                placeholder="Enter First Name">
+                        </div>
+
+                        <div class="form-group">
+                            <label> Last Name </label>
+                            <input type="text" name="lname" id="lname" class="form-control"
+                                placeholder="Enter Last Name">
+                        </div>
+
+                        <div class="form-group">
+                            <label> Course </label>
+                            <input type="text" name="course" id="course" class="form-control"
+                                placeholder="Enter Course">
+                        </div>
+
+                        <div class="form-group">
+                            <label> Phone Number </label>
+                            <input type="text" name="contact" id="contact" class="form-control"
+                                placeholder="Enter Phone Number">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" name="updatedata" class="btn btn-primary">Update Data</button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+<script>
+        $(document).ready(function () {
+
+            $('.editbtn').on('click', function () {
+               console.log("hello");
+                $('#editmodal').modal('show');
+
+                $tr = $(this).closest('tr');
+
+                var data = $tr.children("td").map(function () {
+                    return $(this).text();
+                }).get();
+
+                console.log(data);
+
+                $('#update_id').val(data[0]);
+                $('#fname').val(data[1]);
+                $('#lname').val(data[2]);
+                $('#course').val(data[3]);
+                $('#contact').val(data[4]);
+            });
+        });
+    </script>

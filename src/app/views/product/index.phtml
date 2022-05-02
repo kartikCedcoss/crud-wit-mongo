@@ -1,0 +1,80 @@
+<form action="../product/add" method="POST">
+    <table>
+        <tr><td>Name:</td><td><input type="text" name="pName"></td></tr>
+        <tr><td>Category Name:</td><td><input type="text" name="catName"></td></tr>
+        <tr><td>Price:</td><td><input type="text" name="pPrice"></td></tr>
+        <tr><td>Stock:</td><td><input type="text" name="pStock"></td></tr>
+       <?php if($temp == 1){
+           echo '<tr><td>Meta Fields:</td><td><input type="text" name="metaLabel" placeholder="Label"><br><input type="text" name="metavalue" placeholder="Value"></td></tr>';
+       } ?>
+        <?php if($temp == 2){?>
+          <tr><td>Meta Fields:</td><td><input type="text" name="metaLabel" placeholder="Label"><br><input type="text" name="metaValue" placeholder="Value"></td></tr>
+          <tr><td>Variations:</td><td><input type="text"  name="attrName" ><br>
+      <input name="attrValue" type="text"><br>
+      <input type="text" name="varPrice" placeholder="Price"></td></tr>
+      <?php } ?>
+        <tr><td><button class="btn btn-warning" >ADD</button></td></tr>
+        </form>
+        <tr><td></td><td></td><td><form action="../product/" method="POST">
+            <?php if ($temp == 0){ ?>
+            <button class="btn" name="addField" value="<?php echo $temp; ?>"><b>+</b></button>
+            <?php } ?></td>
+            <?php if($temp !=0){?>
+            <td><button class="btn" name="addField" value="<?php echo $temp; ?>"><b>+</b></button></td>
+            <td><button class="btn" name="decField" value="<?php echo $temp; ?>"><b>-</b></button>
+            <?php }?>
+        </td></form></tr>
+    </table>
+
+    
+
+    <div class="modal fade" id="editmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel"> Edit Student Data </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <form action="updatecode.php" method="POST">
+
+                    <div class="modal-body">
+
+                        <input type="hidden" name="update_id" id="update_id">
+
+                        <div class="form-group">
+                            <label> First Name </label>
+                            <input type="text" name="fname" id="fname" class="form-control"
+                                placeholder="Enter First Name">
+                        </div>
+
+                        <div class="form-group">
+                            <label> Last Name </label>
+                            <input type="text" name="lname" id="lname" class="form-control"
+                                placeholder="Enter Last Name">
+                        </div>
+
+                        <div class="form-group">
+                            <label> Course </label>
+                            <input type="text" name="course" id="course" class="form-control"
+                                placeholder="Enter Course">
+                        </div>
+
+                        <div class="form-group">
+                            <label> Phone Number </label>
+                            <input type="text" name="contact" id="contact" class="form-control"
+                                placeholder="Enter Phone Number">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" name="updatedata" class="btn btn-primary">Update Data</button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
