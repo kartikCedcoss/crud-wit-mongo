@@ -42,7 +42,6 @@ class ProductController extends Controller
     }
     public function searchAction(){
         $flag = 0;
-
         if($this->request->getPost('search') != "" ){
         $product = $this->request->getPost('search');
         $client = new MongoDB\Client("mongodb+srv://m001-student:m001-mongodb-basics@cluster0.bromc.mongodb.net/myFirstDatabase?retryWrites=true&w=majority");
@@ -78,12 +77,11 @@ class ProductController extends Controller
             "category"=>$this->request->getPost('ucatName'),
             "price"=>$this->request->getPost('upPrice'),
             "stock"=>$this->request->getPost('upStock'),
-            "meta[0]"=>$this->request->getPost('umetaLabel'),
-            "meta[1]"=>$this->request->getPost('umetaValue'),
-            "variations[0]"=>$this->request->getPost('uattrName'),
-            "variations[1]"=>$this->request->getPost('uattrValue'),
-            "variations[2]"=>$this->request->getPost('uvarPrice'),
-
+            "meta"=>[$this->request->getPost('umetaLabel'),$this->request->getPost('umetaValue')],
+            "variations"=>[
+                $this->request->getPost('uattrName'),
+                $this->request->getPost('uattrValue'),
+                $this->request->getPost('uvarPrice')],
         ));
         $client = new MongoDB\Client("mongodb+srv://m001-student:m001-mongodb-basics@cluster0.bromc.mongodb.net/myFirstDatabase?retryWrites=true&w=majority");
         $collection = $client->test->products;
