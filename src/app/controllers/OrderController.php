@@ -10,13 +10,13 @@ class OrderController extends Controller
         $collection = $client->test->orders;
         if($this->request->getPost('status')){
             $status=$this->request->getPost('status');
-            $result = $collection->find(["status"=>$status]);
+            $result = $collection->find(["status"=>$status],['sort' => ['date' => -1]]);
             $this->view->result=$result;
         }elseif($this->request->getPost('btnCustom')){
             $from = $this->request->getPost('from');
             $to = $this->request->getPost('to');
             
-            $result = $collection->find(['date' =>['$gte' => strtotime($from), '$lte' => strtotime($to)]]    
+            $result = $collection->find(['date' =>['$gte' => strtotime($from), '$lte' => strtotime($to)]],['sort' => ['date' => -1]]    
             );
             $this->view->result=$result;
         }
@@ -24,24 +24,24 @@ class OrderController extends Controller
             $val = $this->request->getPost('date');
             switch($val){
             case "Today":
-              $result = $collection->find(["date"=>strtotime(date("d-m-Y"))]);
+              $result = $collection->find(["date"=>strtotime(date("d-m-Y"))],['sort' => ['date' => -1]]);
               $this->view->result=$result;   
               break;
 
             case "This Week":
                 $monday = strtotime('last monday', strtotime('tomorrow'));
                 $sunday = strtotime('+6 days', $monday);
-                $result = $collection->find(['date' =>['$gte' => strtotime(date('d-m-Y', $monday)), '$lte' => strtotime(date('d-m-Y', $sunday) )]]    
+                $result = $collection->find(['date' =>['$gte' => strtotime(date('d-m-Y', $monday)), '$lte' => strtotime(date('d-m-Y', $sunday) )]],['sort' => ['date' => -1]]    
             );
             $this->view->result=$result;
              break;
             case "This Month": 
-            $result = $collection->find(['date' =>['$gte' => strtotime(date('01/m/Y')), '$lte' => strtotime(date('t-m-Y') )]]);
+            $result = $collection->find(['date' =>['$gte' => strtotime(date('01/m/Y')), '$lte' => strtotime(date('t-m-Y') )]],['sort' => ['date' => -1]]);
             $this->view->result=$result;
             }
          }
         else{
-        $result = $collection->find();
+        $result = $collection->find([],['sort' => ['date' => -1]]);
         $this->view->result=$result;
     }
     }
